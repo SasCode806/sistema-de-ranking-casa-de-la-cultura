@@ -29,6 +29,14 @@ import Link from "next/link";
 export default function UserRanking() {
   const { userId } = useAuth();
   const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Verificar si el usuario es admin de manera segura
+    if (userId) {
+      setIsAdmin(isTeacher(userId));
+    }
+  }, [userId]);
 
   const fetchVolunteers = async () => {
     try {
